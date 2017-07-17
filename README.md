@@ -1,2 +1,3 @@
 # SummerCampGame
-SummerCamp
+# All Developers
+#    1. Xiaoyu.Qu
