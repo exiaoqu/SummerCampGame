@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/addMushroom.unity
+  isLoaded: 1
+  isActive: 1
