@@ -26,7 +26,6 @@ public class CameraFollow : MonoBehaviour
         return Mathf.Abs(transform.position.x - player.position.x) > xMargin;
     }
 
-
     bool CheckZMargin()
     {
         // Returns true if the distance between the camera and the player in the y axis is greater than the y margin.
