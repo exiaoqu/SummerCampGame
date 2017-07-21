@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bf1b95fba89fb2e438e098ef4361e389
+guid: d8cfd7d57beec3c4ab64830bfcb8c8b2
 timeCreated: 1458051986
 licenseType: Store
 ModelImporter:
@@ -149,7 +149,7 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
-    animationCompression: 3
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -159,13 +159,13 @@ ModelImporter:
     - serializedVersion: 16
       name: Take 001
       takeName: Take 001
-      firstFrame: 16
-      lastFrame: 45
+      firstFrame: 30
+      lastFrame: 53
       wrapMode: 2
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
-      loop: 1
+      loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
@@ -281,7 +281,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 1
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
