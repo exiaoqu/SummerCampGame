@@ -46,6 +46,11 @@ var trotAfterSeconds = 3.0;
 
 var canJump = true;
 
+var boundaryXMin =  0.0;
+var boundaryXMax = 59.5;
+var boundaryZMin =  0.0;
+var boundaryZMax = 59.5;
+
 private var jumpRepeatTime = 0.05;
 private var jumpTimeout = 0.15;
 private var groundedTimeout = 0.25;
@@ -286,6 +291,29 @@ function DidJump ()
 	_characterState = CharacterState.Jumping;
 }
 
+function outofBoundary()
+{
+	if(transform.position.x < boundaryXMin)
+	{
+		transform.position.x = boundaryXMin;
+	}
+
+	if(transform.position.x > boundaryXMax)
+	{
+		transform.position.x = boundaryXMax;
+	}
+
+	if(transform.position.z < boundaryZMin)
+	{
+		transform.position.z = boundaryZMin;
+	}
+
+	if(transform.position.z > boundaryZMax)
+	{
+		transform.position.z = boundaryZMax;
+	}
+}
+
 function Update() {
 	
 	if (!isControllable)
@@ -384,6 +412,8 @@ function Update() {
 			SendMessage("DidLand", SendMessageOptions.DontRequireReceiver);
 		}
 	}
+
+	outofBoundary();
 }
 
 function OnControllerColliderHit (hit : ControllerColliderHit )

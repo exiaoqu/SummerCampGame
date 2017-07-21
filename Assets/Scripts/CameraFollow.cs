@@ -35,7 +35,6 @@ public class CameraFollow : MonoBehaviour
 
     void FixedUpdate()
     {
-        Debug.Log("FixedUpdate...");
         TrackPlayer();
     }
 
