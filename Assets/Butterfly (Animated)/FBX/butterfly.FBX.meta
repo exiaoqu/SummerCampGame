@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d8cfd7d57beec3c4ab64830bfcb8c8b2
+guid: bf1b95fba89fb2e438e098ef4361e389
 timeCreated: 1458051986
 licenseType: Store
 ModelImporter:
@@ -140,11 +140,9 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleCurves: 1
+    resampleRotations: 1
     optimizeGameObjects: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -159,8 +157,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Take 001
       takeName: Take 001
-      firstFrame: 30
-      lastFrame: 53
+      firstFrame: 0
+      lastFrame: 100
       wrapMode: 2
       orientationOffsetY: 0
       level: 0
@@ -265,7 +263,6 @@ ModelImporter:
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
     human: []
     skeleton: []
     armTwist: 0.5
@@ -276,10 +273,7 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
-    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 0
-    skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 1
   humanoidOversampling: 1

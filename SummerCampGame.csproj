@@ -123,6 +123,7 @@
     <Compile Include="Assets\Kitten\Scripts\kittenMove.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\CharacterMovement.cs" />
+    <Compile Include="Assets\Scripts\RandomFly.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Butterfly (Animated)\Butterfly (Animated).txt" />
