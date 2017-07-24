@@ -140,8 +140,8 @@ ModelImporter:
     11100000: //RootNode
   materials:
     importMaterials: 1
-    materialName: 0
-    materialSearch: 2
+    materialName: 1
+    materialSearch: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0

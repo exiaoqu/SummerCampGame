@@ -81,6 +81,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\EnterMushroomDoor.cs" />
     <Compile Include="Assets\Forest Environment\Standard Assets\Character Controllers\Sources\Scripts\MouseLook.cs" />
     <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\Antialiasing.cs" />
     <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\Bloom.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Assets\Kitten\Scripts\kittenMove.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\CharacterMovement.cs" />
+    <Compile Include="Assets\Scripts\DestoryByTime.cs" />
     <Compile Include="Assets\Scripts\RandomFly.cs" />
   </ItemGroup>
   <ItemGroup>
