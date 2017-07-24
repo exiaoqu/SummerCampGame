@@ -49,15 +49,19 @@ public class RandomFly : MonoBehaviour {
     {
         yield return new WaitForSeconds(startWait);
 
-        float flyXDirection = UnityEngine.Random.Range(-boundary.x, boundary.x);
-        float flyZDirection = UnityEngine.Random.Range(0, boundary.y);
-        float flyYDirection = UnityEngine.Random.Range(-boundary.z, boundary.z);
+        while (true)
+        {
+            float flyXDirection = UnityEngine.Random.Range(-boundary.x, boundary.x);
+            float flyZDirection = UnityEngine.Random.Range(0.06f, boundary.y);
+            float flyYDirection = UnityEngine.Random.Range(-boundary.z, boundary.z);
 
-        movement = new Vector3(flyXDirection, flyYDirection, flyZDirection);
-       
-        float randomFlyTimeLen = UnityEngine.Random.Range(minFlyTimeLen, maxFlyTimeLen);
+            movement = new Vector3(flyXDirection, flyYDirection, flyZDirection);
+            movement = transform.position - movement;
 
-        yield return new WaitForSeconds(randomFlyTimeLen);
+            float randomFlyTimeLen = UnityEngine.Random.Range(minFlyTimeLen, maxFlyTimeLen);
+
+            yield return new WaitForSeconds(randomFlyTimeLen);
+        }
     }
 
     private Vector2 computeRange(float player, float range, float boundary)
