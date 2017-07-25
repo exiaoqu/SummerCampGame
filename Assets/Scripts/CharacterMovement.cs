@@ -11,10 +11,12 @@ public class CharacterMovement : MonoBehaviour
     private Vector3 turning;
     private Animation anims;
     private Rigidbody playerRigidbody;
+	private GameObject player;
 
     void Awake()
     {
         //Get references
+		player = GameObject.FindGameObjectWithTag("Player");
         anims = GetComponent<Animation>();
         playerRigidbody = GetComponent<Rigidbody>();
     }

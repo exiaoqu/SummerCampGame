@@ -36,18 +36,18 @@ public class RandomFly : MonoBehaviour
         butterflyAnimation = trans.Find("Butterfly").GetComponent<Animation>();
 
         butterflyAnimationClipCount = butterflyAnimation.GetClipCount();
-        Debug.Log("Animation Clip Count:" + butterflyAnimationClipCount);
+        //Debug.Log("Animation Clip Count:" + butterflyAnimationClipCount);
 
         int i = 0;
         butterflyAnimationClips = new String[butterflyAnimationClipCount];
         foreach (AnimationState state in butterflyAnimation)
         {
             butterflyAnimationClips[i++] = state.name;
-            Debug.Log("Animation Clip Name[" + i + "]: " + state.name);
+            //Debug.Log("Animation Clip Name[" + i + "]: " + state.name);
         }
 
         animationClipName = butterflyAnimationClips[UnityEngine.Random.Range(0, butterflyAnimationClipCount)];
-        Debug.Log("Selected Animation Clip Name: " + animationClipName);
+        //Debug.Log("Selected Animation Clip Name: " + animationClipName);
 
         Vector3 randomVector3 = UnityEngine.Random.insideUnitSphere;
 
@@ -57,7 +57,7 @@ public class RandomFly : MonoBehaviour
             Mathf.Abs(randomVector3.z * maxDistanceToPlayer.z)
             );
 
-        Debug.Log("randomPositionToPlayer: " + randomPositionToPlayer);
+        //Debug.Log("randomPositionToPlayer: " + randomPositionToPlayer);
         trans.position = player.transform.position + randomPositionToPlayer;
 
         // initial player position
@@ -65,7 +65,7 @@ public class RandomFly : MonoBehaviour
 
         // random toward player or not
         towardPlayer = UnityEngine.Random.value > 0.5f;
-        Debug.Log("towardPlayer: " + towardPlayer);
+        //Debug.Log("towardPlayer: " + towardPlayer);
 
 
     }
@@ -97,7 +97,7 @@ public class RandomFly : MonoBehaviour
         while (true)
         {
             Vector3 distanceToPlayer = trans.position - player.transform.position;
-            Debug.Log("distanceToPlayer: " + distanceToPlayer);
+            //Debug.Log("distanceToPlayer: " + distanceToPlayer);
 
             if (Mathf.Abs(distanceToPlayer.x) > maxDistanceToPlayer.x
                 || Mathf.Abs(distanceToPlayer.y) > maxDistanceToPlayer.y
@@ -117,7 +117,7 @@ public class RandomFly : MonoBehaviour
             {
                 targetPosition = player.transform.position;
 
-                Debug.Log("towardPlayer: " + towardPlayer + " targetPoistion: " + targetPosition);
+                //Debug.Log("towardPlayer: " + towardPlayer + " targetPoistion: " + targetPosition);
             }
             else
             {
@@ -129,7 +129,7 @@ public class RandomFly : MonoBehaviour
                     randomVector3.z * boundary.z
                     );
 
-                Debug.Log("towardPlayer: " + towardPlayer + " targetPoistion: " + targetPosition);
+                //Debug.Log("towardPlayer: " + towardPlayer + " targetPoistion: " + targetPosition);
             }
 
             yield return new WaitForSeconds(UnityEngine.Random.Range(minFlyTimeLen, maxFlyTimeLen));

@@ -95,9 +95,12 @@ private var lastGroundedTime = 0.0;
 
 private var isControllable = true;
 
+
+
 function Awake ()
 {
 	moveDirection = transform.TransformDirection(Vector3.forward);
+
 	
 	_animation = GetComponent(Animation);
 	if(!_animation)
@@ -400,7 +403,7 @@ function Update() {
 			transform.rotation = Quaternion.LookRotation(xzMove);
 		}
 	}	
-	
+
 	// We are in jump mode but just became grounded
 	if (IsGrounded())
 	{
