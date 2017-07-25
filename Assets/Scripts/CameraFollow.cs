@@ -1,77 +1,103 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum GameStartPhase { ZOOMIN_MAP, ZOOMIN_PLAYER, TRACK_PLAYER };
+
 public class CameraFollow : MonoBehaviour
 {
-    public float xMargin = 1f;      // Distance in the x axis the player can move before the camera follows.
-    public float zMargin = 1f;      // Distance in the z axis the player can move before the camera follows.
-    public float yMargin = 1f;
-    public float xSmooth = 8f;      // How smoothly the camera catches up with it's target movement in the x axis.
-    public float zSmooth = 8f;      // How smoothly the camera catches up with it's target movement in the y axis.
-    public float ySmooth = 8f;
-    public Vector3 maxXAndZ;        // The maximum x and y coordinates the camera can have.
-    public Vector3 minXAndZ;        // The minimum x and y coordinates the camera can have.
+    public float zoomInMapSpeed = 5.0f;
+    public float zoomInPlayerSpeed = 0.5f;
+    public float declineHeightInZoomInMap = 10.0f;
+    public float cameraLookAtPointSpeed = 0.5f;
+    public GameStartPhase gameStartPhase;
 
+    public Vector3 margin;          // Distance the player can move before the camera follows.
+    public Vector3 smooth;          // How smoothly the camera catches up with it's target movement
+    public Vector3 boundaryMax;        // The maximum boundary coordinates the camera can have
+    public Vector3 boundaryMin;        // The minmum boundary coordinates the camera can have.
 
-    private Transform player;       // Reference to the player's transform.
+    private GameObject player;       // Reference to the player's transform
+    private GameObject mainCamera;
+    private GameObject cameraLookAtPoint;
+    private Vector3 targetPositionInZoomInMap;
 
-    void Awake()
+    private void Awake()
     {
-        // Setting up the reference.
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("Player");
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        cameraLookAtPoint = GameObject.FindGameObjectWithTag("CameraLookAtPoint");
+
+        targetPositionInZoomInMap = new Vector3(
+            transform.position.x,
+            transform.position.y - declineHeightInZoomInMap,
+            transform.position.z);
+
+        Debug.Log("Camera decline to: " + targetPositionInZoomInMap);
+
+    }
+
+    private void Update()
+    {
+        if(gameStartPhase == GameStartPhase.ZOOMIN_MAP)
+        {
+            ZoomInMap();
+        }
+        else if(gameStartPhase == GameStartPhase.ZOOMIN_PLAYER)
+        {
+            ZoomInPlayer();
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if(gameStartPhase == GameStartPhase.TRACK_PLAYER)
+        {
+            TrackPlayer();
+        }
     }
 
 
-    bool CheckXMargin()
+    private void ZoomInMap()
     {
-        // Returns true if the distance between the camera and the player in the x axis is greater than the x margin.
-        return Mathf.Abs(transform.position.x - player.position.x) > xMargin;
+        // vertically decline the camera
+        if (transform.position != targetPositionInZoomInMap)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targetPositionInZoomInMap, zoomInMapSpeed * Time.deltaTime);
+            mainCamera.transform.LookAt(cameraLookAtPoint.transform);
+        }
+        else
+        {
+            gameStartPhase = GameStartPhase.ZOOMIN_PLAYER;
+        }
     }
 
-    bool CheckZMargin()
+    private void ZoomInPlayer()
     {
-        // Returns true if the distance between the camera and the player in the y axis is greater than the y margin.
-        return Mathf.Abs(transform.position.z - player.position.z) > zMargin;
+        if(transform.position != player.transform.position)
+        {
+            cameraLookAtPoint.transform.position = Vector3.MoveTowards(cameraLookAtPoint.transform.position, player.transform.position, cameraLookAtPointSpeed * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, cameraLookAtPoint.transform.position, zoomInPlayerSpeed * Time.deltaTime);
+            mainCamera.transform.LookAt(cameraLookAtPoint.transform);
+        }
+        else
+        {
+            gameStartPhase = GameStartPhase.TRACK_PLAYER;
+        }
     }
 
-    bool CheckYMargin()
+    private void TrackPlayer()
     {
-        // Returns true if the distance between the camera and the player in the y axis is greater than the y margin.
-        return Mathf.Abs(transform.position.y - player.position.y) > yMargin;
-    }
+        float targetX = (Mathf.Abs(transform.position.x - player.transform.position.x) > margin.x)?
+            Mathf.Lerp(transform.position.x, player.transform.position.x, smooth.x * Time.deltaTime) : transform.position.x;
+        float targetZ = (Mathf.Abs(transform.position.z - player.transform.position.z) > margin.z)?
+            Mathf.Lerp(transform.position.z, player.transform.position.z, smooth.z * Time.deltaTime) : transform.position.z;
+        float targetY = (Mathf.Abs(transform.position.y - player.transform.position.y) > margin.y)?
+            Mathf.Lerp(transform.position.y, player.transform.position.y, smooth.y * Time.deltaTime) : transform.position.y;
 
-    void FixedUpdate()
-    {
-        TrackPlayer();
-    }
+        targetX = Mathf.Clamp(targetX, boundaryMin.x, boundaryMax.x);
+        targetZ = Mathf.Clamp(targetZ, boundaryMin.z, boundaryMax.z);
+        targetY = Mathf.Clamp(targetY, boundaryMin.y, boundaryMax.y);
 
-
-    void TrackPlayer()
-    {
-        // By default the target x and y coordinates of the camera are it's current x and y coordinates.
-        float targetX = transform.position.x;
-        float targetZ = transform.position.z;
-        float targetY = transform.position.y;
-
-        // If the player has moved beyond the x margin...
-        if (CheckXMargin())
-            // ... the target x coordinate should be a Lerp between the camera's current x position and the player's current x position.
-            targetX = Mathf.Lerp(transform.position.x, player.position.x, xSmooth * Time.deltaTime);
-
-        // If the player has moved beyond the y margin...
-        if (CheckZMargin())
-            // ... the target y coordinate should be a Lerp between the camera's current y position and the player's current y position.
-            targetZ = Mathf.Lerp(transform.position.z, player.position.z, zSmooth * Time.deltaTime);
-
-        if (CheckYMargin())
-            targetY = Mathf.Lerp(transform.position.y, player.position.y, ySmooth * Time.deltaTime);
-
-        // The target x and y coordinates should not be larger than the maximum or smaller than the minimum.
-        targetX = Mathf.Clamp(targetX, minXAndZ.x, maxXAndZ.x);
-        targetZ = Mathf.Clamp(targetZ, minXAndZ.z, maxXAndZ.z);
-        targetY = Mathf.Clamp(targetY, minXAndZ.y, maxXAndZ.y);
-
-        // Set the camera's position to the target position with the same z component.
         transform.position = new Vector3(targetX, targetY, targetZ);
     }
 }

@@ -5,16 +5,16 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{97E08B6E-AF9A-4A45-7D2D-DC060EEF16CF}</ProjectGuid>
+    <ProjectGuid>{A29C0AA2-DAD1-7E75-5D66-F6F54A65C31D}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>Assembly-CSharp-Editor-firstpass</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
     <CompilerResponseFile></CompilerResponseFile>
-    <UnityProjectType>Game:1</UnityProjectType>
+    <UnityProjectType>EditorPlugins:7</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.6.2f1</UnityVersion>
     <RootNamespace></RootNamespace>
@@ -52,11 +52,26 @@
     <Reference Include="UnityEngine">
       <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Advertisements">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Advertisements.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>Library\UnityAssemblies\UnityEditor.UI.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Networking">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.TestRunner">
+      <HintPath>Library\UnityAssemblies\UnityEditor.TestRunner.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TestRunner">
       <HintPath>Library\UnityAssemblies\UnityEngine.TestRunner.dll</HintPath>
@@ -64,20 +79,47 @@
     <Reference Include="nunit.framework">
       <HintPath>Library\UnityAssemblies\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.TreeEditor">
+      <HintPath>Library\UnityAssemblies\UnityEditor.TreeEditor.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Analytics">
       <HintPath>Library\UnityAssemblies\UnityEngine.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Analytics">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.HoloLens">
+      <HintPath>Library\UnityAssemblies\UnityEditor.HoloLens.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.Purchasing">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Purchasing.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.VR">
+      <HintPath>Library\UnityAssemblies\UnityEditor.VR.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.VR">
       <HintPath>Library\UnityAssemblies\UnityEngine.VR.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor">
-      <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
+    <Reference Include="UnityEditor.Graphs">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Graphs.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.WebGL.Extensions">
+      <HintPath>Library\UnityAssemblies\UnityEditor.WebGL.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.WindowsStandalone.Extensions">
+      <HintPath>Library\UnityAssemblies\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
+      <HintPath>Library\UnityAssemblies\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-UnityScript-firstpass">
       <HintPath>Library\ScriptAssemblies\Assembly-UnityScript-firstpass.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-UnityScript">
+      <HintPath>Library\ScriptAssemblies\Assembly-UnityScript.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -85,59 +127,13 @@
       <Project>{2050BD19-5151-6276-702A-C10E3648E25D}</Project>
       <Name>SummerCampGame.Plugins</Name>
     </ProjectReference>
+    <ProjectReference Include="SummerCampGame.csproj">
+      <Project>{97E08B6E-AF9A-4A45-7D2D-DC060EEF16CF}</Project>
+      <Name>SummerCampGame</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\EnterMushroomDoor.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Character Controllers\Sources\Scripts\MouseLook.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\Antialiasing.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\Bloom.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\BloomAndFlares.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\BloomOptimized.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\Blur.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\BlurOptimized.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\CameraMotionBlur.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\ColorCorrectionCurves.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\ColorCorrectionLookup.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\ColorCorrectionRamp.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\ContrastEnhance.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\ContrastStretch.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\CreaseShading.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\DepthOfField.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\DepthOfFieldDeprecated.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\EdgeDetection.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\Fisheye.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\GlobalFog.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\Grayscale.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\ImageEffectBase.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\ImageEffects.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\MotionBlur.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\NoiseAndGrain.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\NoiseAndScratches.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\PostEffectsBase.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\PostEffectsHelper.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\Quads.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\ScreenOverlay.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\ScreenSpaceAmbientObscurance.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\ScreenSpaceAmbientOcclusion.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\SepiaTone.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\SunShafts.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\TiltShift.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\Tonemapping.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\Triangles.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\Twirl.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\VignetteAndChromaticAberration.cs" />
-    <Compile Include="Assets\Forest Environment\Standard Assets\Effects\ImageEffects\Scripts\Vortex.cs" />
-    <Compile Include="Assets\Kitten\Scripts\kittenMove.cs" />
-    <Compile Include="Assets\Particle Ribbon by Moonflower Carnivore\Scripts\ReverseNormals.cs" />
-    <Compile Include="Assets\Particle Ribbon by Moonflower Carnivore\Scripts\randomParticleRotation.cs" />
-    <Compile Include="Assets\Particle Ribbon by Moonflower Carnivore\Scripts\rotation.cs" />
-    <Compile Include="Assets\Scripts\CameraFollow.cs" />
-    <Compile Include="Assets\Scripts\CharacterMovement.cs" />
-    <Compile Include="Assets\Scripts\DestoryByTime.cs" />
-    <Compile Include="Assets\Scripts\EnergyPickup.cs" />
-    <Compile Include="Assets\Scripts\JustDestoryByTime.cs" />
-    <Compile Include="Assets\Scripts\PlayerInventory.cs" />
-    <Compile Include="Assets\Scripts\RandomFly.cs" />
+    <Compile Include="Assets\Standard Assets\Editor\CrossPlatformInput\CrossPlatformInputInitialize.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Butterfly (Animated)\Butterfly (Animated).txt" />
