@@ -8,9 +8,9 @@ public class EnergyPickup : MonoBehaviour {
 	public GameObject getEnergy;
 
 	public float destryTime = 0.1f;
-	public float energy_step = 0.05f;
+	public float energy_step = 0.8f;
 
-	public float maxChangeSize = 4.0f;
+	public float maxChangeSize = 15.0f;
 	public float minChangeSize = 1.0f;
 
 	private static string CAT = "Player";
@@ -22,11 +22,16 @@ public class EnergyPickup : MonoBehaviour {
 	private bool changeFlag = false;
 
 	private Transform playerTransform;
+	private float kitRadius;
+	private GameObject kitPlayer ;
 
 
 	void Start(){
-		playerInventory = GameObject.FindGameObjectWithTag (CAT).GetComponent<PlayerInventory>();
-		playerTransform = GameObject.FindGameObjectWithTag (CAT).GetComponent<Transform>();
+		kitPlayer = GameObject.FindGameObjectWithTag (CAT);
+		playerInventory = kitPlayer.GetComponent<PlayerInventory>();
+		playerTransform = kitPlayer.GetComponent<Transform>();
+		kitRadius = kitPlayer.GetComponent<CapsuleCollider> ().radius;
+
 	}
 
 	void activeEffects(Collider other) {
@@ -39,7 +44,12 @@ public class EnergyPickup : MonoBehaviour {
 	}
 
 	void updatePlayerScale() {
-		if (playerInventory.collectedEnergy % 2 == 0) {			
+		Debug.Log(" updatePlayerScale: collectedEnergy:" + playerInventory.collectedEnergy);
+		//if (playerInventory.collectedEnergy % 2 == 0)
+		{	
+			Debug.Log(" updatePlayerScale: CapsuleCollider. radius:" + kitPlayer.GetComponent<CapsuleCollider> ().radius);
+			kitPlayer.GetComponent<CapsuleCollider> ().radius = kitRadius * playerInventory.playerScale/2.0f;
+
 			if (playerInventory.playerScale < maxChangeSize) {				
 				Debug.Log(" updatePlayerScale: playerScale:" + playerScale);
 				playerTransform.localScale = new Vector3(playerInventory.playerScale, 
@@ -52,6 +62,8 @@ public class EnergyPickup : MonoBehaviour {
 					playerTransform.localScale.z*playerScale);
 					*/
 			}
+
+
 		}
 	}
 
@@ -65,9 +77,9 @@ public class EnergyPickup : MonoBehaviour {
 
 
 		if (gameObject.tag.Equals (ENERGY_BIG_FLOWER) || gameObject.tag.Equals (ENERGY_BUTTERFLY)) {
-			playerInventory.playerScale = playerInventory.playerScale + energy_step;
+			playerInventory.playerScale = playerInventory.playerScale + energy_step * 2;
 			Debug.Log("current playerScale:" + playerScale);
-			playerInventory.collectedEnergy++;
+			playerInventory.collectedEnergy = playerInventory.collectedEnergy + 3;
 			Debug.Log("collectedEnergy: " + playerInventory.collectedEnergy + " playerScale:" + playerInventory.playerScale);
 		}
 	}
@@ -81,8 +93,6 @@ public class EnergyPickup : MonoBehaviour {
 			updatePlayerScale ();
 
 			addEnergy ();
-
-
 
 		}
 
