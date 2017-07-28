@@ -8,8 +8,7 @@ public class RandomFly : MonoBehaviour
 {
     public float speed = 0.2f;
 
-    public float minFlyTimeLen = 1.0f;
-    public float maxFlyTimeLen = 3.0f;
+    public float directFlyHeight = 0.1f;
 
     public Vector3 maxDistanceToPlayer;
     public Vector3 minDistanceToPlayer;
@@ -17,10 +16,10 @@ public class RandomFly : MonoBehaviour
 
     private float startingWait = 0.5f;
     private GameObject player;
-    private Transform trans;
     private Boolean towardPlayer;
     private Rigidbody rb;
     private Vector3 targetPosition;
+    private Vector3 flyEndPosition;
 
     private Animation butterflyAnimation;
     private int butterflyAnimationClipCount;
@@ -32,8 +31,7 @@ public class RandomFly : MonoBehaviour
         // random generate object around player
         player = GameObject.FindGameObjectWithTag("Player");
 
-        trans = GetComponent<Transform>();
-        butterflyAnimation = trans.Find("Butterfly").GetComponent<Animation>();
+        butterflyAnimation = transform.Find("Butterfly").GetComponent<Animation>();
 
         butterflyAnimationClipCount = butterflyAnimation.GetClipCount();
         //Debug.Log("Animation Clip Count:" + butterflyAnimationClipCount);
@@ -58,155 +56,105 @@ public class RandomFly : MonoBehaviour
             );
 
         //Debug.Log("randomPositionToPlayer: " + randomPositionToPlayer);
-        trans.position = player.transform.position + randomPositionToPlayer;
+        transform.position = player.transform.position + randomPositionToPlayer;
 
-        // initial player position
-        targetPosition = player.transform.position;
 
         // random toward player or not
         towardPlayer = UnityEngine.Random.value > 0.5f;
-        //Debug.Log("towardPlayer: " + towardPlayer);
+        if (towardPlayer == false)
+        {
+            targetPosition = transform.position;
+            targetPosition.y = player.transform.position.y + (player.transform.localScale.y / 2.0f) + minDistanceToPlayer.y + directFlyHeight;
 
+            Vector3 randomInsideUnitSphere = getRandomInsideUnitSphere();
+            flyEndPosition = new Vector3(
+                    randomInsideUnitSphere.x > 0 ? (1 + randomInsideUnitSphere.x) * maxDistanceToPlayer.x : (-1 + randomInsideUnitSphere.x) * maxDistanceToPlayer.x,
+                    (Mathf.Abs(randomInsideUnitSphere.y) + 1) * maxDistanceToPlayer.y,
+                    randomInsideUnitSphere.z > 0 ? (1 + randomInsideUnitSphere.z) * maxDistanceToPlayer.z : (-1 + randomInsideUnitSphere.z) * maxDistanceToPlayer.z);
+        }
+    }
 
+    private static Vector3 getRandomInsideUnitSphere()
+    {
+        return UnityEngine.Random.insideUnitSphere;
     }
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        StartCoroutine(RandomFlying());
     }
 
     private void Update()
     {
+        Vector3 distanceToPlayer = transform.position - player.transform.position;
+
+        if (towardPlayer == false
+                && (Mathf.Abs(distanceToPlayer.x) > maxDistanceToPlayer.x
+                || Mathf.Abs(distanceToPlayer.y) > maxDistanceToPlayer.y
+                || Mathf.Abs(distanceToPlayer.z) > maxDistanceToPlayer.z))
+        {
+            towardPlayer = true;
+            // Debug.Log("towardPlayer turns to: " + towardPlayer);
+        }
+
         float step = speed * Time.deltaTime;
 
-        trans.localPosition = new Vector3(
-            Mathf.Lerp(trans.localPosition.x, targetPosition.x, step),
-            Mathf.Lerp(trans.localPosition.y, targetPosition.y, step),
-            Mathf.Lerp(trans.localPosition.z, targetPosition.z, step));
-
-        // String animationClipName = butterflyAnimationClips[UnityEngine.Random.Range(0, butterflyAnimationClipCount)];
-        // Debug.Log("Play Animation Clip: " + ClipName);
-        butterflyAnimation.Play(animationClipName);
-    }
-
-    IEnumerator RandomFlying()
-    {
-        yield return new WaitForSeconds(startingWait);
-
-        while (true)
+        if (towardPlayer)
         {
-            Vector3 distanceToPlayer = trans.position - player.transform.position;
-            //Debug.Log("distanceToPlayer: " + distanceToPlayer);
+            targetPosition = player.transform.position;
+            // Debug.Log("toward player: " + targetPosition);
 
-            if (Mathf.Abs(distanceToPlayer.x) > maxDistanceToPlayer.x
-                || Mathf.Abs(distanceToPlayer.y) > maxDistanceToPlayer.y
-                || Mathf.Abs(distanceToPlayer.z) > maxDistanceToPlayer.z)
-            {
-                towardPlayer = true;
-            }
+            transform.localPosition = new Vector3(
+                Mathf.Lerp(transform.localPosition.x, targetPosition.x, step),
+                Mathf.Lerp(transform.localPosition.y, targetPosition.y, step),
+                Mathf.Lerp(transform.localPosition.z, targetPosition.z, step));
 
-            if (Mathf.Abs(distanceToPlayer.x) < minDistanceToPlayer.x
-                && Mathf.Abs(distanceToPlayer.y) < minDistanceToPlayer.y
-                && Mathf.Abs(distanceToPlayer.z) < minDistanceToPlayer.z)
+
+            Vector3 minDistance = minDistanceToPlayer + new Vector3(
+                player.GetComponent<Collider>().bounds.size.x / 2.0f + GetComponent<Collider>().bounds.size.x / 2.0f,
+                player.GetComponent<Collider>().bounds.size.y / 2.0f + GetComponent<Collider>().bounds.size.y / 2.0f,
+                player.GetComponent<Collider>().bounds.size.z / 2.0f + GetComponent<Collider>().bounds.size.z / 2.0f);
+
+            if (Mathf.Abs(distanceToPlayer.x) < minDistance.x
+               && Mathf.Abs(distanceToPlayer.y) < minDistance.y
+               && Mathf.Abs(distanceToPlayer.z) < minDistance.z)
             {
                 towardPlayer = false;
+                // Debug.Log("Min Distance: " + minDistance + "  towardPlayer turns to: " + towardPlayer);
+
+                targetPosition = transform.position;
+                targetPosition.y = player.transform.position.y + (player.transform.localScale.y / 2.0f) + minDistanceToPlayer.y + directFlyHeight;
+
+                Vector3 randomInsideUnitSphere = getRandomInsideUnitSphere();
+                flyEndPosition = new Vector3(
+                    randomInsideUnitSphere.x > 0 ? (1 + randomInsideUnitSphere.x) * maxDistanceToPlayer.x : (-1 + randomInsideUnitSphere.x) * maxDistanceToPlayer.x,
+                    (Mathf.Abs(randomInsideUnitSphere.y) + 1) * maxDistanceToPlayer.y,
+                    randomInsideUnitSphere.z > 0 ? (1 + randomInsideUnitSphere.z) * maxDistanceToPlayer.z : (-1 + randomInsideUnitSphere.z) * maxDistanceToPlayer.z);
             }
-
-            if (towardPlayer)
+        }
+        else if (targetPosition == flyEndPosition)
+        {
+            // Debug.Log("toward flying end: " + targetPosition);
+            transform.localPosition = new Vector3(
+                Mathf.Lerp(transform.localPosition.x, targetPosition.x, step),
+                Mathf.Lerp(transform.localPosition.y, targetPosition.y, step),
+                Mathf.Lerp(transform.localPosition.z, targetPosition.z, step));
+        }
+        else
+        {
+            if (transform.position.y >= targetPosition.y)
             {
-                targetPosition = player.transform.position;
-
-                //Debug.Log("towardPlayer: " + towardPlayer + " targetPoistion: " + targetPosition);
+                // Debug.Log("reach the height point: " + targetPosition);
+                targetPosition = flyEndPosition;
             }
             else
             {
-                Vector3 randomVector3 = UnityEngine.Random.insideUnitSphere;
-
-                targetPosition = new Vector3(
-                    randomVector3.x * boundary.x,
-                    Mathf.Abs(randomVector3.y * boundary.y),
-                    randomVector3.z * boundary.z
-                    );
-
-                //Debug.Log("towardPlayer: " + towardPlayer + " targetPoistion: " + targetPosition);
+                // Debug.Log("toward height point: " + targetPosition);
+                transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
             }
-
-            yield return new WaitForSeconds(UnityEngine.Random.Range(minFlyTimeLen, maxFlyTimeLen));
         }
+
+        // Debug.Log("Play Animation Clip: " + ClipName);
+        butterflyAnimation.Play(animationClipName);
     }
-
-
-    /*
-        public float startWait = 0.5f;
-
-        public float minFlyTimeLen = 2.0f;
-        public float maxFlyTimeLen = 10.0f;
-
-        public float speed;
-
-        public Vector3 boundary;
-        public Vector3 Range;
-
-        private Rigidbody rb;
-        private Vector3 movement;
-        private GameObject player;
-
-
-        // Use this for initialization
-        void Start () {
-            player = GameObject.FindWithTag("Player");
-            rb = GetComponent<Rigidbody>();
-
-            StartCoroutine(RandomFlying());
-        }
-
-        // Update is called once per frame
-        void FixedUpdate () {
-
-           Vector2 vector2X = computeRange(player.transform.position.x, Range.x, boundary.x);
-           Vector2 vector2Y = computeRange(player.transform.position.y, Range.y, boundary.y);
-           Vector2 vector2Z = computeRange(player.transform.position.z, Range.z, boundary.z);
-
-            Vector3 position = new Vector3(
-               Mathf.Clamp(transform.position.x, vector2X.x, vector2X.y),
-               Mathf.Clamp(transform.position.y, vector2Y.x, vector2Y.y),
-               Mathf.Clamp(transform.position.z, vector2Z.x, vector2Z.y)
-           );
-
-            rb.AddForceAtPosition(movement * speed, position);
-            rb.position = position;
-
-        }
-
-        IEnumerator RandomFlying()
-        {
-            yield return new WaitForSeconds(startWait);
-
-            while (true)
-            {
-                float flyXDirection = UnityEngine.Random.Range(-boundary.x, boundary.x);
-                float flyZDirection = UnityEngine.Random.Range(0.06f, boundary.y);
-                float flyYDirection = UnityEngine.Random.Range(-boundary.z, boundary.z);
-
-                movement = new Vector3(flyXDirection, flyYDirection, flyZDirection);
-                movement = transform.position - movement;
-
-                float randomFlyTimeLen = UnityEngine.Random.Range(minFlyTimeLen, maxFlyTimeLen);
-
-                yield return new WaitForSeconds(randomFlyTimeLen);
-            }
-        }
-
-        private Vector2 computeRange(float player, float range, float boundary)
-        {
-            float flyMax = player + range;
-            float flyMin = player - range;
-            if (flyMax > boundary) flyMax = boundary;
-            if (flyMin < 0) flyMin = 0;
-
-            return new Vector2(flyMin, flyMax);
-        }
-
-        */
 }
