@@ -294,6 +294,9 @@
     <None Include="Assets\Kitten\Shaders\Alpha-Diffuse.shader" />
     <None Include="Assets\Kitten\Shaders\Normal-Diffuse.shader" />
     <None Include="Assets\Materials\UI-Default-No-Alpha.shader" />
+    <None Include="Assets\MazeWarrior\Assets\EnemyRober\Goblin_rouge\readme.txt" />
+    <None Include="Assets\MazeWarrior\Assets\PowerUps Vol 1 Free\Readme.txt" />
+    <None Include="Assets\MazeWarrior\Assets\Standard Assets\Tessellation Shaders\BumpedSpecularSmooth.shader" />
     <None Include="Assets\Mushroom house\StandardDoubleSided.shader" />
     <None Include="Assets\NGUI\Examples\Atlases\Fantasy\Fantasy Font - Normal.txt" />
     <None Include="Assets\NGUI\Examples\Atlases\Refractive\Refractive Font - Header.txt" />

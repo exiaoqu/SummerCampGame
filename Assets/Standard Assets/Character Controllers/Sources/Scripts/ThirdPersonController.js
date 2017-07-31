@@ -94,11 +94,15 @@ private var lastGroundedTime = 0.0;
 
 
 private var isControllable = true;
-
+private var mainCamera : GameObject;
+private var healthCanvas : GameObject;
 
 
 function Awake ()
 {
+	mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+	healthCanvas = GameObject.Find("HealthCanvas");
+
 	moveDirection = transform.TransformDirection(Vector3.forward);
 
 	
@@ -415,6 +419,9 @@ function Update() {
 			SendMessage("DidLand", SendMessageOptions.DontRequireReceiver);
 		}
 	}
+
+	// Canvas look at camera
+	healthCanvas.transform.LookAt(mainCamera.transform);
 
 	outofBoundary();
 }
