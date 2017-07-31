@@ -14,6 +14,7 @@ public class DestoryByTime : MonoBehaviour {
     private void OnDestroy()
     {
         // switch scene
-        SceneManager.LoadScene("FantasticForest", LoadSceneMode.Single);
+        //SceneManager.LoadScene("FantasticForest", LoadSceneMode.Single);
+		SceneManager.LoadScene("SecondScene", LoadSceneMode.Single);
     }
 }

@@ -8,9 +8,11 @@ public class EnterMushroomDoor : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Enter Mushroom door!");
-
-        // initiate EnterMushroomSpark
-        Instantiate(enterMushroomSpark, other.transform.position, other.transform.rotation);  
+		if(other.tag.Equals("Player")){
+			Debug.Log("CAT Enter Mushroom door!");
+			// initiate EnterMushroomSpark
+			Instantiate(enterMushroomSpark, other.transform.position, other.transform.rotation); 
+		}
+        
     }
 }

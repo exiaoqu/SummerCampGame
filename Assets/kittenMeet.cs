@@ -5,12 +5,18 @@ using UnityEngine;
 public class kittenMeet : MonoBehaviour {
 	public float meetDistance = 0.25f;
 
+	public bool isShowText = true;
+
 	private static string CAT = "Player";
 	PlayerInventory playerInventory;
 	AudioSource[] audioList;
 	private Animation kitAnimation;
 	private GameObject player;
 	private Vector3 npcPosition;
+
+	UITextDiag textDiag;
+	private GameObject textObj;
+
 	// Use this for initialization
 	void Start () {
 		audioList = GetComponents<AudioSource> ();
@@ -18,6 +24,17 @@ public class kittenMeet : MonoBehaviour {
 		kitAnimation = player.GetComponent<Animation>();
 		playerInventory = player.GetComponent<PlayerInventory>();
 		npcPosition = GetComponent<Transform> ().localPosition;
+		 
+
+	    textObj = GameObject.FindGameObjectWithTag ("DiagText");
+		textObj.SetActive (false);
+		//textObj = GameObject.Find("Canvas/Text");
+		//string aa = textObj.GetComponentInChildren(System.Text).GetComponent<UnityEngine.UI.Text> ().text;
+		//Debug.Log (aa);
+		//string aa = textObj.GetComponent<UnityEngine.UI.Text> ().text;
+		//Debug.Log (GameObject.Find("Canvas/Text").GetComponent<UnityEngine.UI.Text>().text);
+		//textDiag = textObj.GetComponent<UITextDiag> ();
+
 	}
 
 	bool isMeet(){
@@ -63,7 +80,32 @@ public class kittenMeet : MonoBehaviour {
 			meetAction ();
 		}
 
+		if (Input.GetKeyDown (KeyCode.R)) {
+			//showText ();
+			textObj.SetActive (true);
+			//textObj = GameObject.Find("C
+			textDiag = textObj.GetComponent<UITextDiag> ();
+			textDiag.showKitContent("爱你没音量111");
+
+			//textObj.SetActive (false);
+			//textObj = GameObject.Find("C
+		}
+
+		if (Input.GetKeyDown (KeyCode.Q)) {
+
+			textObj.SetActive (false);
+			textDiag = textObj.GetComponent<UITextDiag> ();
+			textDiag.showNpcContent("滚滚滚滚滚！！！！");
+			textObj.SetActive (true);
+			//textObj = GameObject.Find("C
+		}
+
 			
+	}
+
+	void showText(){
+		
+		//GUI.Label (new Rect (Screen.width * 0.5f, Screen.height * 0.5f, 100, 30), "dffdf");
 	}
 
 
