@@ -10,7 +10,7 @@ public class EnergyPickup : MonoBehaviour {
 	public float destryTime = 0.1f;
 	public float energy_step = 0.8f;
 
-	public float maxChangeSize = 15.0f;
+	public float maxChangeSize = 8.0f;
 	public float minChangeSize = 1.0f;
 
 	private static string CAT = "Player";

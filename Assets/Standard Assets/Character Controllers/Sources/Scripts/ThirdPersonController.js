@@ -96,12 +96,16 @@ private var lastGroundedTime = 0.0;
 private var isControllable = true;
 private var mainCamera : GameObject;
 private var healthCanvas : GameObject;
-
+private var playerOriginalScale : Vector3;
+private var healthCanvasOriginalScale : Vector3;
 
 function Awake ()
 {
 	mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 	healthCanvas = GameObject.Find("HealthCanvas");
+
+	playerOriginalScale = transform.localScale;
+	healthCanvasOriginalScale = healthCanvas.transform.localScale;
 
 	moveDirection = transform.TransformDirection(Vector3.forward);
 
@@ -421,6 +425,7 @@ function Update() {
 	}
 
 	// Canvas look at camera
+	healthCanvas.transform.localScale = healthCanvasOriginalScale * (playerOriginalScale.x / transform.localScale.x);
 	healthCanvas.transform.LookAt(mainCamera.transform);
 
 	outofBoundary();
