@@ -26,8 +26,8 @@ public class kittenMeet : MonoBehaviour {
 		npcPosition = GetComponent<Transform> ().localPosition;
 		 
 
-	    textObj = GameObject.FindGameObjectWithTag ("DiagText");
-		textObj.SetActive (false);
+	    textObj = GameObject.FindGameObjectWithTag ("EnergyText");
+		textObj.SetActive (true);
 		//textObj = GameObject.Find("Canvas/Text");
 		//string aa = textObj.GetComponentInChildren(System.Text).GetComponent<UnityEngine.UI.Text> ().text;
 		//Debug.Log (aa);

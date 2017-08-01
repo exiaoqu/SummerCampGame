@@ -102,7 +102,7 @@ private var healthCanvasOriginalScale : Vector3;
 function Awake ()
 {
 	mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-	healthCanvas = GameObject.Find("HealthCanvas");
+	healthCanvas = GameObject.Find("EnergyCanvas");
 
 	playerOriginalScale = transform.localScale;
 	healthCanvasOriginalScale = healthCanvas.transform.localScale;
