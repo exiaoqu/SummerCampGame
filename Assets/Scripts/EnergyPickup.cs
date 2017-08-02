@@ -24,6 +24,7 @@ public class EnergyPickup : MonoBehaviour {
 	private Transform playerTransform;
 	private float kitRadius;
 	private GameObject kitPlayer ;
+	public GameObject PopupDamage ;
 
 
 	void Start(){
@@ -35,12 +36,15 @@ public class EnergyPickup : MonoBehaviour {
 	}
 
 	void activeEffects(Collider other) {
-		Debug.Log("audio play");
+		//Debug.Log("audio play");
 		GetComponent<AudioSource>().Play ();
-		Debug.Log("destory mush");
+		//Debug.Log("destory mush");
 		Destroy(gameObject, destryTime);
 		//gameObject.SetActive (false);
 		Instantiate(getEnergy, other.transform.position, other.transform.rotation); 
+
+		//GameObject mObject = (GameObject)Instantiate (PopupDamage,transform.position,Quaternion.identity );
+		//mObject.GetComponent<PopupDamage>().
 	}
 
 	void updatePlayerScale() {
@@ -54,33 +58,64 @@ public class EnergyPickup : MonoBehaviour {
 				Debug.Log(" updatePlayerScale: playerScale:" + playerScale);
 				playerTransform.localScale = new Vector3(playerInventory.playerScale, 
 					playerInventory.playerScale, 
-					playerInventory.playerScale);
-
-				/*
-				    playerTransform.localScale = new Vector3(playerTransform.localScale.x*playerScale, 
-					playerTransform.localScale.y*playerScale, 
-					playerTransform.localScale.z*playerScale);
-					*/
+					playerInventory.playerScale);				
 			}
 
 
 		}
 	}
+	void updatePlayerLevel() {
+		// update the level number and scale
+	}
+
 
 	void addEnergy() {
-		if (gameObject.tag.Equals (ENERGY_SMALL_FLOWER) || gameObject.tag.Equals (ENERGY_TOADSTOOL) ) {
+		GameObject popupObject = (GameObject)Instantiate (PopupDamage,transform.position,Quaternion.identity );
+
+		if (gameObject.tag.Equals (ENERGY_TOADSTOOL) ) {			
+			popupObject.GetComponent<DamagePopup> ().Value = "+1";
+			playerInventory.collectedEnergy++;
+
+			updatePlayerLevel();
+			//playerInventory.playerScale = playerInventory.playerScale + energy_step;
+			//Debug.Log("current playerScale:" + playerScale);
+			//Debug.Log("collectedEnergy: " + playerInventory.collectedEnergy + " playerScale:" + playerInventory.playerScale);
+		}
+
+		if (gameObject.tag.Equals (ENERGY_SMALL_FLOWER) ) {
+			popupObject.GetComponent<DamagePopup> ().Value = "+2";
+			playerInventory.collectedEnergy = playerInventory.collectedEnergy + 2;
+			updatePlayerLevel();
+			/*
 			playerInventory.playerScale = playerInventory.playerScale + energy_step;
 			Debug.Log("current playerScale:" + playerScale);
-			playerInventory.collectedEnergy++;
 			Debug.Log("collectedEnergy: " + playerInventory.collectedEnergy + " playerScale:" + playerInventory.playerScale);
+			*/
 		}
 
 
-		if (gameObject.tag.Equals (ENERGY_BIG_FLOWER) || gameObject.tag.Equals (ENERGY_BUTTERFLY)) {
+		if (gameObject.tag.Equals (ENERGY_BUTTERFLY)) {
+			popupObject.GetComponent<DamagePopup> ().Value = "+4";
+			playerInventory.collectedEnergy = playerInventory.collectedEnergy + 4;
+			updatePlayerLevel();
+			/*
 			playerInventory.playerScale = playerInventory.playerScale + energy_step * 2;
 			Debug.Log("current playerScale:" + playerScale);
-			playerInventory.collectedEnergy = playerInventory.collectedEnergy + 3;
+
 			Debug.Log("collectedEnergy: " + playerInventory.collectedEnergy + " playerScale:" + playerInventory.playerScale);
+			*/
+		}
+
+		if (gameObject.tag.Equals (ENERGY_BIG_FLOWER)) {
+			popupObject.GetComponent<DamagePopup> ().Value = "+5";
+			playerInventory.collectedEnergy = playerInventory.collectedEnergy + 5;
+			updatePlayerLevel();
+			/*
+			playerInventory.playerScale = playerInventory.playerScale + energy_step * 2;
+			Debug.Log("current playerScale:" + playerScale);
+
+			Debug.Log("collectedEnergy: " + playerInventory.collectedEnergy + " playerScale:" + playerInventory.playerScale);
+			*/
 		}
 	}
 
@@ -90,7 +125,7 @@ public class EnergyPickup : MonoBehaviour {
 			
 			activeEffects (other);
 
-			updatePlayerScale ();
+			//updatePlayerScale ();
 
 			addEnergy ();
 
