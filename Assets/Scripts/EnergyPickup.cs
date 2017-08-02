@@ -22,7 +22,7 @@ public class EnergyPickup : MonoBehaviour {
 	private bool changeFlag = false;
 
 	private Transform playerTransform;
-	private float kitRadius;
+	// private float kitRadius;
 	private GameObject kitPlayer ;
 	public GameObject PopupDamage ;
 
@@ -31,8 +31,7 @@ public class EnergyPickup : MonoBehaviour {
 		kitPlayer = GameObject.FindGameObjectWithTag (CAT);
 		playerInventory = kitPlayer.GetComponent<PlayerInventory>();
 		playerTransform = kitPlayer.GetComponent<Transform>();
-		kitRadius = kitPlayer.GetComponent<CapsuleCollider> ().radius;
-
+		// kitRadius = kitPlayer.GetComponent<CapsuleCollider> ().radius;
 	}
 
 	void activeEffects(Collider other) {
@@ -48,13 +47,16 @@ public class EnergyPickup : MonoBehaviour {
 	}
 
 	void updatePlayerScale() {
-		Debug.Log(" updatePlayerScale: collectedEnergy:" + playerInventory.collectedEnergy);
-		//if (playerInventory.collectedEnergy % 2 == 0)
-		{	
-			Debug.Log(" updatePlayerScale: CapsuleCollider. radius:" + kitPlayer.GetComponent<CapsuleCollider> ().radius);
-			kitPlayer.GetComponent<CapsuleCollider> ().radius = kitRadius * playerInventory.playerScale/2.0f;
 
-			if (playerInventory.playerScale < maxChangeSize) {				
+		//if (playerInventory.collectedEnergy % 2 == 0)
+        if(playerTransform.localScale.x != playerInventory.playerScale)
+		{
+            Debug.Log(" updatePlayerScale: collectedEnergy:" + playerInventory.collectedEnergy);
+
+            // Debug.Log(" updatePlayerScale: CapsuleCollider. radius:" + kitPlayer.GetComponent<CapsuleCollider> ().radius);
+            // kitPlayer.GetComponent<CapsuleCollider> ().radius = kitRadius * playerInventory.playerScale/2.0f;
+
+            if (playerInventory.playerScale < maxChangeSize) {				
 				Debug.Log(" updatePlayerScale: playerScale:" + playerScale);
 				playerTransform.localScale = new Vector3(playerInventory.playerScale, 
 					playerInventory.playerScale, 

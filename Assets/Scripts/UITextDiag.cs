@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UITextDiag : MonoBehaviour 
 {
-	private PlayerInventory playerInventory;
+	//private PlayerInventory playerInventory;
 	//public int playerEnergy;
 
 	private Text talkText;
@@ -31,7 +31,7 @@ public class UITextDiag : MonoBehaviour
 	// Use this for initialization
 	void Awake () 
 	{
-		playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventory>();
+		//playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventory>();
 		talkText = GetComponent<Text> ();
 		rt = GetComponent<RectTransform>();   
 
