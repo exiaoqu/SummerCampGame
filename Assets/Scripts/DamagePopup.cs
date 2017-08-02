@@ -70,25 +70,36 @@ public class DamagePopup : MonoBehaviour {
 		//保证目标在摄像机前方
 		//if(mScreen.z>0)
 		{
-			//GUISkin skin = new GUISkin ();
-			//skin.label
-			GUIStyle style = new GUIStyle ();
-			//style.font = (Font)Resources.Load ("RAVIE");
-			//style.font = (Font)Resources.Load ("Jupiter");
-			style.fontSize = 50;
-			//style.fontStyle = FontStyle.Bold;
-			style.fontStyle = FontStyle.BoldAndItalic;
-			//style.font.material
-			style.normal.textColor = Color.green;
+            //GUISkin skin = new GUISkin ();
+            //skin.label
+           // GUISkin skin = (GUISkin)Resources.Load("MyGuiSkin");
+            //Debug.Log("Font name: " + skin.label.font.name);
+            GUIStyle style = new GUIStyle ();
+           // Debug.Log("Font name: " + style.font.name);
+
+            style.font = (Font)Resources.Load ("Fonts/RAVIE");
+            //Font myFont = (Font)Resources.Load("Fonts/RAVIE");
+            //GUI.skin.label.font = myFont;
+            //GUI.skin.label.fontSize = 50;
+            //style.font = (Font)Resources.Load ("ARIAL");
+            //Debug.Log("Font name: " + style.font);
+
+            style.fontSize = 30;
+            //style.fontStyle = FontStyle.Bold;
+            style.fontStyle = FontStyle.Italic;
+            //style.fontStyle = FontStyle.BoldAndItalic;
+            //style.font.material
+            //style.normal.textColor = Color.green;
 			style.alignment = TextAnchor.MiddleCenter;
 
-			//style.normal.textColor = new Color (222f/256f, 11f/256f, 60f/256f);
+            style.normal.textColor = new Color (20f/256f, 240f/256f, 250f/256f, 150f/256f);
+            
+            //内部使用GUI坐标进行绘制
+            //GUI.Label(new Rect(mPoint.x, mPoint.y, ContentWidth, ContentHeight), Value, skin.GetStyle());
+            GUI.Label(new Rect(mPoint.x,mPoint.y,ContentWidth,ContentHeight),Value, style);
+            //GUI.Label(new Rect(mPoint.x,mPoint.y,ContentWidth,ContentHeight),Value);
 
-		   //内部使用GUI坐标进行绘制
-		   GUI.Label(new Rect(mPoint.x,mPoint.y,ContentWidth,ContentHeight),Value.ToString(), style);
-			//GUI.Label(new Rect(mPoint.x,mPoint.y,ContentWidth,ContentHeight),Value.ToString(), "lable");
-
-		}
+        }
 
 
 

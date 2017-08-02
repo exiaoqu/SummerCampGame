@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: fa1fe3f25402b4e44a36bc17eab77ee0
+timeCreated: 1501667070
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Microsoft JhengHei
+  fontNames:
+  - Microsoft JhengHei
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 2324b1609bbb0e146aa5c04f2d25cf8c, type: 3}
+  - {fileID: 12800000, guid: b0c7ea7183156364b84525ed030bc43d, type: 3}
+  - {fileID: 12800000, guid: 273df3cc019c75345afae9ffb9f5d88e, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
