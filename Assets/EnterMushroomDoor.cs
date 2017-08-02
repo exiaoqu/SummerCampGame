@@ -5,7 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class EnterMushroomDoor : MonoBehaviour {
     public GameObject enterMushroomSpark;
+    public GameObject shiningMushroomDoor;
 
+    public void shiningDoor()
+    {
+        Instantiate(shiningMushroomDoor, transform.position, transform.rotation);
+    }
     private void OnTriggerEnter(Collider other)
     {
 		if(other.tag.Equals("Player")){

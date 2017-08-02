@@ -13,6 +13,8 @@ public class PlayerInventory : MonoBehaviour
     public Slider kittenEnergySlider;
     public Text  playerLevelText;
     public Slider playerEnergySlider;
+    public GameObject magicDoor;
+    public int magicDoorShiningLevel = 3;
 
     public void UpdateEnergySlider()
     {
@@ -20,6 +22,11 @@ public class PlayerInventory : MonoBehaviour
         float value = 100.0f * getCurrentEnergyRatio();
 
         Debug.Log("level = " + level + " energy slider value:" + value);
+
+        if(level >= magicDoorShiningLevel)
+        {
+            magicDoor.GetComponent<EnterMushroomDoor>().shiningDoor();
+        }
 
         kittenEnergySlider.value = value;
         playerLevelText.text = "Level : " + level;
