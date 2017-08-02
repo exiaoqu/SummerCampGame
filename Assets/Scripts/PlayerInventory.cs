@@ -1,21 +1,98 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 using System.Collections;
 
-public class PlayerInventory : MonoBehaviour 
+public class PlayerInventory : MonoBehaviour
 {
-	public int collectedEnergy = 0;
-	public float playerScale = 2.0f;
-	public int currentLevel = 1;
-	
-	// Use this for initialization
-	void Start () 
-	{
-		
-	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-		
-	}
+    public int collectedEnergy = 0;
+    public float playerScale = 2.0f;
+    public float scaleDelta = 0.8f;
+
+    public int getCurrentLevel()
+    {
+        int level;
+
+        if (collectedEnergy < 4)
+        {
+            level = 1;
+        }
+        else if (collectedEnergy < 12)
+        {
+            level = 2;
+        }
+        else if (collectedEnergy < 24)
+        {
+            level = 3;
+        }
+        else if (collectedEnergy < 40)
+        {
+            level = 4;
+        }
+        else if (collectedEnergy < 60)
+        {
+            level = 5;
+        }
+        else if (collectedEnergy < 84)
+        {
+            level = 6;
+        }
+        else if (collectedEnergy < 112)
+        {
+            level = 7;
+        }
+        else if (collectedEnergy < 144)
+        {
+            level = 8;
+        }
+        else
+        {
+            level = 9;
+        }
+
+        playerScale = 2.0f + (level - 1) * scaleDelta;
+        return level;
+
+    }
+
+    public float getCurrentEnergyRatio()
+    {
+        if (collectedEnergy < 4)
+        {
+            return collectedEnergy / 4;
+        }
+        else if (collectedEnergy < 12)
+        {
+            return (collectedEnergy - 4) / 8;
+        }
+        else if (collectedEnergy < 24)
+        {
+            return (collectedEnergy - 12) / 12;
+        }
+        else if (collectedEnergy < 40)
+        {
+            return (collectedEnergy - 24) / 16;
+        }
+        else if (collectedEnergy < 60)
+        {
+            return (collectedEnergy - 40) / 20;
+        }
+        else if (collectedEnergy < 84)
+        {
+            return (collectedEnergy - 60) / 24;
+        }
+        else if (collectedEnergy < 112)
+        {
+            return (collectedEnergy - 84) / 28;
+        }
+        else if (collectedEnergy < 144)
+        {
+            return (collectedEnergy - 112) / 32;
+        }
+        else
+        {
+            float ratio = (collectedEnergy - 144) / 36;
+            return ratio > 1.0f ? 1.0f : ratio;
+        }
+    }
+
 }
