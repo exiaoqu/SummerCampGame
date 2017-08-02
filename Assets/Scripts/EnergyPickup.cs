@@ -65,8 +65,12 @@ public class EnergyPickup : MonoBehaviour {
 		}
 	}
 	void updatePlayerLevel() {
-		// update the level number and scale
-	}
+        // update the level number and scale
+        playerInventory.UpdateEnergySlider();
+        updatePlayerScale();
+
+
+    }
 
 
 	void addEnergy() {

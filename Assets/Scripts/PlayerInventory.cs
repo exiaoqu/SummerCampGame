@@ -2,13 +2,31 @@
 using UnityEngine;
 using System.Collections;
 
+using UnityEngine.UI;
+
 public class PlayerInventory : MonoBehaviour
 {
     public int collectedEnergy = 0;
     public float playerScale = 2.0f;
     public float scaleDelta = 0.8f;
 
-    public int getCurrentLevel()
+    public Slider kittenEnergySlider;
+    public Text  playerLevelText;
+    public Slider playerEnergySlider;
+
+    public void UpdateEnergySlider()
+    {
+        int level = getCurrentLevel();
+        float value = 100.0f * getCurrentEnergyRatio();
+
+        Debug.Log("level = " + level + " energy slider value:" + value);
+
+        kittenEnergySlider.value = value;
+        playerLevelText.text = "Level : " + level;
+        playerEnergySlider.value = value;
+    }
+
+    private int getCurrentLevel()
     {
         int level;
 
@@ -54,45 +72,44 @@ public class PlayerInventory : MonoBehaviour
 
     }
 
-    public float getCurrentEnergyRatio()
+    private float getCurrentEnergyRatio()
     {
         if (collectedEnergy < 4)
         {
-            return collectedEnergy / 4;
+            return collectedEnergy / 4.0f;
         }
         else if (collectedEnergy < 12)
         {
-            return (collectedEnergy - 4) / 8;
+            return (collectedEnergy - 4) / 8.0f;
         }
         else if (collectedEnergy < 24)
         {
-            return (collectedEnergy - 12) / 12;
+            return (collectedEnergy - 12) / 12.0f;
         }
         else if (collectedEnergy < 40)
         {
-            return (collectedEnergy - 24) / 16;
+            return (collectedEnergy - 24) / 16.0f;
         }
         else if (collectedEnergy < 60)
         {
-            return (collectedEnergy - 40) / 20;
+            return (collectedEnergy - 40) / 20.0f;
         }
         else if (collectedEnergy < 84)
         {
-            return (collectedEnergy - 60) / 24;
+            return (collectedEnergy - 60) / 24.0f;
         }
         else if (collectedEnergy < 112)
         {
-            return (collectedEnergy - 84) / 28;
+            return (collectedEnergy - 84) / 28.0f;
         }
         else if (collectedEnergy < 144)
         {
-            return (collectedEnergy - 112) / 32;
+            return (collectedEnergy - 112) / 32.0f;
         }
         else
         {
-            float ratio = (collectedEnergy - 144) / 36;
+            float ratio = (collectedEnergy - 144) / 36.0f;
             return ratio > 1.0f ? 1.0f : ratio;
         }
     }
-
 }
