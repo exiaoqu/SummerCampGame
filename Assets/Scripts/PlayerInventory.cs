@@ -16,6 +16,8 @@ public class PlayerInventory : MonoBehaviour
     public GameObject magicDoor;
     public int magicDoorShiningLevel = 3;
 
+    public GameObject secondPlayer;
+
     public void UpdateEnergySlider()
     {
         int level = getCurrentLevel();
@@ -118,5 +120,11 @@ public class PlayerInventory : MonoBehaviour
             float ratio = (collectedEnergy - 144) / 36.0f;
             return ratio > 1.0f ? 1.0f : ratio;
         }
+    }
+
+    private void OnDestroy()
+    {
+
+        Instantiate(secondPlayer, transform.position, transform.rotation);
     }
 }
