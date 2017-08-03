@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class EnterMushroomDoor : MonoBehaviour {
-    public float playerLifeTime = 2.0f;
+    public float playerLifeTime = 1.0f;
     public GameObject enterMushroomSpark;
     public GameObject shiningMushroomDoor;
   
