@@ -306,6 +306,7 @@
     <Compile Include="Assets\Scripts\DragPanel.cs" />
     <Compile Include="Assets\Scripts\DropMe.cs" />
     <Compile Include="Assets\Scripts\EnergyPickup.cs" />
+    <Compile Include="Assets\Scripts\GamePoemShow.cs" />
     <Compile Include="Assets\Scripts\ImageLoader.cs" />
     <Compile Include="Assets\Scripts\JustDestoryByTime.cs" />
     <Compile Include="Assets\Scripts\PanelManager.cs" />
