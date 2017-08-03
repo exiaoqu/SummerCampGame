@@ -35,7 +35,7 @@ public class PlayerInventory : MonoBehaviour
         playerEnergySlider.value = value;
     }
 
-    private int getCurrentLevel()
+    public int getCurrentLevel()
     {
         int level;
 

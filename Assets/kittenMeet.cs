@@ -5,7 +5,8 @@ using UnityEngine;
 public class kittenMeet : MonoBehaviour {
 	public float meetDistance = 0.25f;
 
-    public float responseDelay = 1.0f;
+    public float responseDelay = 3.5f;
+    public int changeTalkLevel = 4;
 
 	private static string CAT = "Player";
 	PlayerInventory playerInventory;
@@ -18,12 +19,30 @@ public class kittenMeet : MonoBehaviour {
 	private GameObject textObj;
     private  int i = 0;
 
-    private  string[] kitTalks = { "大哥! Good Morning..." ,
-        "呜！呜！呜(心伤)...", };
+    private  string[] kitTalks = { "猫哥， Good Morning..." ,
+        "呜呜呜...！走看瞧！" };
     private  string[] kitNpcTalks = {
-        "小样, 滚!",
+        "小东西，走开！",
         ""};
-    
+
+    private string[] kitTalks2 = { "小东西，又见面了" ,
+        "哼，小样! 哥的世界你不懂..."};
+    private string[] kitNpcTalks2 = {
+        "哟，我的天，你吃什么长这么快！" ,
+        ""};
+    /*
+
+猫哥， Good Morning
+小东西，走开！
+哟，瞧不起我，走看瞧
+
+小东西，又见面了
+哟，我的天，你吃什么长这么快
+哼，小样。哥的世界你不懂的 
+ 
+
+     */
+
     // Use this for initialization
     void Start () {
 		audioList = GetComponents<AudioSource> ();
@@ -62,18 +81,18 @@ public class kittenMeet : MonoBehaviour {
 	}
 
 	void audioAction(){
-		float kitScale = playerInventory.playerScale;
-		Debug.Log ("npc get : kit scale :" + kitScale);
-		if (kitScale < 3.5f) {
-			audioList [1].Play ();
-			audioList [2].PlayDelayed (2.0f);
-		}
-		else if (kitScale < 5.5f) {
-			audioList [0].Play ();
-		}
+        //float kitScale = playerInventory.playerScale;
+        //Debug.Log ("npc get : kit scale :" + kitScale);
+        //if (kitScale < 3.5f) {
+        if (playerInventory.getCurrentLevel() < changeTalkLevel)
+        {
+            audioList[0].Play();
+            //audioList[2].PlayDelayed(2.0f);
+        }
 		else {
-			audioList [3].Play ();
+			audioList[1].Play();
 		}
+       
 	}
 
 	void meetAction(){
@@ -84,11 +103,25 @@ public class kittenMeet : MonoBehaviour {
 
     void talk ()
     {
-        if(kitTalks[i] != null)
+        StartCoroutine("NpcResponse");
+        /*
+        if (playerInventory.getCurrentLevel() < changeTalkLevel)
         {
-            textDiag.showKitContent(kitTalks[i]);
-            StartCoroutine("NpcResponse");
+            if (kitTalks[i] != null)
+            {
+                textDiag.showKitContent(kitTalks[i]);
+                StartCoroutine("NpcResponse");
+            }
         }
+        else
+        {
+            if (kitTalks2[i] != null)
+            {
+                textDiag.showKitContent(kitTalks2[i]);
+                StartCoroutine("NpcResponse");
+            }
+        }
+       */
        
     }
 	
@@ -102,6 +135,9 @@ public class kittenMeet : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.T))
             {
                 audioAction();
+                if (0 == i) { textObj.SetActive(true); }
+                talk();
+
             }
             if (Input.GetKeyDown(KeyCode.R))
             {
@@ -160,11 +196,40 @@ public class kittenMeet : MonoBehaviour {
 
     IEnumerator NpcResponse()
     {
-        yield return new WaitForSeconds(responseDelay);
-        if (kitNpcTalks[i] != null)
+        yield return new WaitForSeconds(1.0f);
+        while (true)
         {
-            textDiag.showNpcContent(kitNpcTalks[i++]);
+            
+            if (playerInventory.getCurrentLevel() < changeTalkLevel)
+            {
+                if (kitTalks[i] == null || kitNpcTalks[i] == null)
+                {
+                    break;
+                }
+
+                textDiag.showKitContent(kitTalks[i]);            
+                yield return new WaitForSeconds(responseDelay);
+                textDiag.showNpcContent(kitNpcTalks[i++]);
+                yield return new WaitForSeconds(1f);
+
+            }
+            else
+            {
+                if (kitTalks2[i] == null || kitNpcTalks2[i] == null)
+                {
+                    break;
+                }
+
+                textDiag.showKitContent(kitTalks2[i]);
+                yield return new WaitForSeconds(responseDelay);
+                textDiag.showNpcContent(kitNpcTalks2[i++]);
+                yield return new WaitForSeconds(1f);
+
+            }
+            yield return new WaitForSeconds(responseDelay);
         }
+        
+       
     }
 
     /*
