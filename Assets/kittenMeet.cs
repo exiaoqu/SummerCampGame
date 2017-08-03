@@ -134,9 +134,14 @@ public class kittenMeet : MonoBehaviour {
             // near do
             if (Input.GetKeyDown(KeyCode.T))
             {
-                audioAction();
-                if (0 == i) { textObj.SetActive(true); }
-                talk();
+                
+                if (0 == i)
+                {
+                    audioAction();
+                    textObj.SetActive(true);
+                    talk();
+                }
+               
 
             }
             if (Input.GetKeyDown(KeyCode.R))
@@ -221,7 +226,15 @@ public class kittenMeet : MonoBehaviour {
                 }
 
                 textDiag.showKitContent(kitTalks2[i]);
-                yield return new WaitForSeconds(responseDelay);
+                if (i == 1)
+                {
+                    yield return new WaitForSeconds(3f);
+                }
+                else
+                {
+                    yield return new WaitForSeconds(responseDelay);
+                }
+                
                 textDiag.showNpcContent(kitNpcTalks2[i++]);
                 yield return new WaitForSeconds(1f);
 
