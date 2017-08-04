@@ -86,6 +86,11 @@ public class RandomFly : MonoBehaviour
 
     private void Update()
     {
+        if(player == null)
+        {
+            return;
+        }
+
         Vector3 distanceToPlayer = transform.position - player.transform.position;
 
         if (towardPlayer == false

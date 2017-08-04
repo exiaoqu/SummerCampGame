@@ -259,10 +259,13 @@ public class GameLogic : MonoBehaviour {
     void unlockNextStage()
     {
         string currentStage = PlayerPrefs.GetString("CurrentStage");//e.g Stage1
+        string nextStage = currentStage;
+        /*
         string nextStage = currentStage.Replace("Stage", "");//e.g 1 in string
         int nextStageIncreament = Convert.ToInt32(nextStage);//e.g 1 in int
         nextStageIncreament++;//e.g 2
         nextStage = "Stage" + nextStageIncreament;//e.g Stage2
+        */
         PlayerPrefs.SetString("NextStage", nextStage);//e.g Stage2
         PlayerPrefs.SetString(nextStage + "Unlocked", "Yes");//e,g Stage2Unlocked
 

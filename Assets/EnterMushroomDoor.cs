@@ -7,10 +7,13 @@ public class EnterMushroomDoor : MonoBehaviour {
     public float playerLifeTime = 1.0f;
     public GameObject enterMushroomSpark;
     public GameObject shiningMushroomDoor;
+
+
+    private GameObject shiningMushroomDoorClone;
   
     public void shiningDoor()
     {
-        Instantiate(shiningMushroomDoor, transform.position, transform.rotation);
+        shiningMushroomDoorClone = Instantiate(shiningMushroomDoor, transform.position, transform.rotation);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -19,7 +22,7 @@ public class EnterMushroomDoor : MonoBehaviour {
 
 			Debug.Log("CAT Enter Mushroom door!");
 
-            Destroy(shiningMushroomDoor);
+            Destroy(shiningMushroomDoorClone);
 
             // initiate EnterMushroomSpark
             Instantiate(enterMushroomSpark, other.transform.position, other.transform.rotation);

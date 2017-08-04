@@ -38,6 +38,11 @@ public class CameraFollow : MonoBehaviour
 
     private void Update()
     {
+        if(player == null)
+        {
+            return;
+        }
+
         if(gameStartPhase == GameStartPhase.ZOOMIN_MAP)
         {
             ZoomInMap();
