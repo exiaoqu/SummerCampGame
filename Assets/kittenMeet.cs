@@ -18,18 +18,20 @@ public class kittenMeet : MonoBehaviour {
 	UITextDiag textDiag;
 	private GameObject textObj;
     private  int i = 0;
+    private int index = 2;
+    private bool startTalkFlag = true;
 
     private  string[] kitTalks = { "猫哥， Good Morning..." ,
-        "呜呜呜...！走看瞧！" };
+        "呜呜呜...！走看瞧！", null};
     private  string[] kitNpcTalks = {
         "小东西，走开！",
-        ""};
+        "", null};
 
     private string[] kitTalks2 = { "小东西，又见面了" ,
-        "哼，小样! 哥的世界你不懂..."};
+        "哼，小样! 哥的世界你不懂...", null};
     private string[] kitNpcTalks2 = {
         "哟，我的天，你吃什么长这么快！" ,
-        ""};
+        "", null};
     /*
 
 猫哥， Good Morning
@@ -103,7 +105,12 @@ public class kittenMeet : MonoBehaviour {
 
     void talk ()
     {
-        StartCoroutine("NpcResponse");
+        if(startTalkFlag )
+        {
+            audioAction();
+            StartCoroutine("NpcResponse");
+        }
+        
         /*
         if (playerInventory.getCurrentLevel() < changeTalkLevel)
         {
@@ -140,26 +147,22 @@ public class kittenMeet : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.T))
             {
                 
-                if (0 == i)
+                if (0 == i && index >= 2)
                 {
-                    audioAction();
+                   
                     textObj.SetActive(true);
                     talk();
                 }
                
 
             }
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                if (0 == i) { textObj.SetActive(true); }
-                talk();
-            }
+            
         }
     else
     {
             // far do
             i = 0;
-            textObj.SetActive(false);
+            //textObj.SetActive(false);
 
         }
 
@@ -206,32 +209,36 @@ public class kittenMeet : MonoBehaviour {
 
     IEnumerator NpcResponse()
     {
+        startTalkFlag = false;
+        index = i;
         yield return new WaitForSeconds(1.0f);
         while (true)
         {
-            
+            Debug.Log("talk index = " + index + " private i = " + i);
+
             if (playerInventory.getCurrentLevel() < changeTalkLevel)
             {
-                if (kitTalks[i] == null || kitNpcTalks[i] == null)
+                if (index >= 2)
                 {
                     break;
                 }
 
-                textDiag.showKitContent(kitTalks[i]);            
+                textDiag.showKitContent(kitTalks[index]);            
                 yield return new WaitForSeconds(responseDelay);
-                textDiag.showNpcContent(kitNpcTalks[i++]);
+                textDiag.showNpcContent(kitNpcTalks[index++]);
                 yield return new WaitForSeconds(1f);
+                Debug.Log("talk index = " + index);
 
             }
             else
             {
-                if (kitTalks2[i] == null || kitNpcTalks2[i] == null)
+                if (index >= 2)
                 {
                     break;
                 }
 
-                textDiag.showKitContent(kitTalks2[i]);
-                if (i == 1)
+                textDiag.showKitContent(kitTalks2[index]);
+                if (index == 1)
                 {
                     yield return new WaitForSeconds(3f);
                 }
@@ -240,14 +247,14 @@ public class kittenMeet : MonoBehaviour {
                     yield return new WaitForSeconds(responseDelay);
                 }
                 
-                textDiag.showNpcContent(kitNpcTalks2[i++]);
+                textDiag.showNpcContent(kitNpcTalks2[index++]);
                 yield return new WaitForSeconds(1f);
 
             }
             yield return new WaitForSeconds(responseDelay);
         }
-        
-       
+
+        startTalkFlag = true;
     }
 
     /*
