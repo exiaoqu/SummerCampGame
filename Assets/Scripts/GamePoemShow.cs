@@ -8,9 +8,12 @@ public class GamePoemShow : MonoBehaviour
 {
     public float startDelay = 0.5f;
     public float showDelay = 0.4f;
+    public GameObject energyUI;
+
+    private bool isPoemFinished = false;
 
     private Text poemText;
-    private string[] poemSentences = 
+    private string[] poemSentences =
     {
         "      清平乐  无何谷\n",
         "\n",
@@ -21,21 +24,26 @@ public class GamePoemShow : MonoBehaviour
         null
     };
 
-   
+
 
     //RectTransform rt;
     // Use this for initialization
     void Start()
     {
         poemText = GetComponent<Text>();
-      
+        energyUI.SetActive(false);
+
         StartCoroutine("showPoemContent");
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (isPoemFinished)
+        {
+            gameObject.SetActive(false);
+            energyUI.SetActive(true);
+        }
     }
 
 
@@ -44,7 +52,7 @@ public class GamePoemShow : MonoBehaviour
         yield return new WaitForSeconds(startDelay);
 
         int i = 0;
-        while(i < 6)
+        while (i < 6)
         {
             string sentence = poemSentences[i];
             for (int j = 0; j < sentence.Length; j++)
@@ -54,15 +62,21 @@ public class GamePoemShow : MonoBehaviour
                 yield return new WaitForSeconds(0.1f);
 
             }
-            
+
             i++;
 
             yield return new WaitForSeconds(showDelay);
         }
 
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(7.0f);
 
-        gameObject.SetActive(false);
+        poemText.text = "";
+
+        //gameObject.SetActive(false);
+
+        isPoemFinished = true;
+        yield return new WaitForSeconds(1.0f);
+
 
     }
 }
